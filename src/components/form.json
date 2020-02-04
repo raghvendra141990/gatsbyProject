@@ -1,0 +1,15 @@
+[{
+  "name": "userName",
+  "inputType": "text",
+  "value": "Adam",
+  "children": [{
+    "name": "address",
+    "inputType": "area",
+    "value": ""
+  }, {
+    "name": "phone",
+    "inputType": "text",
+    "value": ""
+  }]
+}
+]

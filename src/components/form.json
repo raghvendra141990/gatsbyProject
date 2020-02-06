@@ -2,14 +2,17 @@
   "name": "userName",
   "inputType": "text",
   "value": "Adam",
+  "class":"parrent",
   "children": [{
     "name": "address",
     "inputType": "area",
-    "value": ""
+    "value": "",
+    "class":"child"
   }, {
     "name": "phone",
     "inputType": "text",
-    "value": "9019721012"
+    "value": "9019721012",
+    "class":"child"
   }]
 }
 ]

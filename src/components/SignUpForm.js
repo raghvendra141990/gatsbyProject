@@ -10,28 +10,31 @@ const handleSubmit = async values => {
 };
 var formHtml=[]
 const fromItem = {}
-formJSON.map((data, index) => {
-    formHtml.push(<Field required  key={`content_item_${index}`} type={data.inputType}  name={data.name}>{data.name}</Field>)
+function generateFormHtml(data){
+  if(!Array.isArray(data)){
+    if(data.name==='phone'){
+      formHtml.push(<Field required  key={data.name} type={data.inputType} name={data.name}  className={`input-${data.class}`}  pattern="^[0-9]{10}$"
+          validityErrors={({ patternMismatch }) =>
+          patternMismatch && "Phone Must be 10 digit."
+        }>{data.name}</Field>)
+    }
+    else
+      formHtml.push(<Field required  key={data.name} type={data.inputType}  name={data.name} className={`input-${data.class}`} >{data.name}</Field>)
       if(data.value)
         fromItem[data.name]=data.value
-      if(data.children){
-        data.children.map((item,i)=>{
-          if(item.value)
-            fromItem[item.name]=item.value
-            if(item.name==='phone')
-            formHtml.push(<Field required  key={`item_children_${index}_${i}`} type={item.inputType} name={item.name}  className="input-child"  pattern="^[0-9]{10}$"
-              validityErrors={({ patternMismatch }) =>
-              patternMismatch && "Phone Must be 10 digit."
-              }>{item.name}</Field>)
-            else {
-              formHtml.push(<Field required  key={`item_children_${index}_${i}`} type={item.inputType} name={item.name} className="input-child" >{item.name}</Field>)
-            }
-            return formHtml;
-          })
+        if(data.children){
+              return generateFormHtml(data.children)
         }
-        return formHtml;
+    return formHtml
+  }
+  else{
+data.map((item, index) => {
+          return generateFormHtml(item)
+        }
+      )
 }
-);
+}
+generateFormHtml(formJSON);
 const SignUpForm = () => {
   return <Formol onSubmit={handleSubmit}  item={fromItem}>
             {formHtml}
